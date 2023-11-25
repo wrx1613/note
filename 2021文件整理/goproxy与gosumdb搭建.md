@@ -6,7 +6,7 @@
 
 环境变量配置
 
-```
+```bash
 go env -w GOPROXY="http://192.168.6.242"
 ```
 
@@ -22,7 +22,7 @@ go env -w GOPROXY="http://192.168.6.242"
 
 service goproxy start|stop|restart
 
-```
+```bash
 #!/bin/bash
 #
 # /etc/rc.d/init.d/hermes_goproxy
@@ -104,7 +104,7 @@ go get 取包实际是git clone，需要配置ssh免密登录（除非gogs服务
 
 4）配置goproxy所在服务器的git地址强制替换ssh
 
-```
+```bash
 git config --global url."ssh://git@xxx:".insteadOf "https://xxx"
 ```
 
@@ -133,7 +133,7 @@ git config --global url."ssh://git@xxx:".insteadOf "https://xxx"
 
 https://goproxy.io/github.com/pochard/logrotator/@latest
 
-```
+```json
 {"Version":"v1.1.3","Time":"2020-04-11T05:45:55Z"}
 ```
 
@@ -181,7 +181,7 @@ looks up a record for the given module, 返回mod对应hash值及服务签名
 
 #### 使用说明
 
-```
+```bash
 go env -w GOSUMDB=sum.funshion.com+bf3cf8ea+AcdkkHpghsvTbRciz0ZsG/WSb92wc8S9ttT/0dZ+9LmD
 ```
 
@@ -222,7 +222,7 @@ golang.org/x/mod/sumdb/note/note.go中的GenerateKey方法。
 
 使用示例
 
-```
+```go
 // Generating Keys
 //
 // There is only one key type, Ed25519 with algorithm identifier 1.
@@ -296,7 +296,7 @@ tile结构是对二叉树进行分片，如图将这棵树分成了高度为2的
 
 为了减少储存，仅保存每一块的最下面一行，可以使储存优化近50%，当然增加了io。
 
-```
+```go
 type Tile struct {
     H int   // 树的高度 (1 ≤ H ≤ 30)
     L int   // 树的横坐标 (-1 ≤ L ≤ 63)
@@ -398,7 +398,7 @@ x = H(h(3, 0), H(h(2, 2), h(0, 12))) = H(H(h(2, 0), H(h(1, 2), H(h(0, 6), h(0, 7
 
 ### go list 命令的用法
 
-```
+```bash
 go list [-f format] [-json] [-m] [list flags] [build flags] [packages]
 ```
 
@@ -430,7 +430,7 @@ go list [-f format] [-json] [-m] [list flags] [build flags] [packages]
 
 #### 核心代码
 
-```
+```go
 func Hash1(files []string, open func(string) (io.ReadCloser, error)) (string, error) {
     h := sha256.New()
     files = append([]string(nil), files...)
@@ -459,7 +459,7 @@ func Hash1(files []string, open func(string) (io.ReadCloser, error)) (string, er
 
 [go.mod](http://confluence.funshion.com:8090/download/attachments/23233102/go.mod?version=1&modificationDate=1639550445000&api=v2)  ==>   h1:I3AJXr54wJ2GdCx1mBrKp3rl1o0kY3UAkvKuzvkSpWA=
 
-```
+```go
 package main
  
 import (
@@ -516,7 +516,7 @@ func Hash1(files []string, open func(string) (io.ReadCloser, error)) (string, er
 
 [gotest.zip](http://confluence.funshion.com:8090/download/attachments/23233102/gotest.zip?version=1&modificationDate=1639550652000&api=v2)   ==>   h1:8n/cZHV3BWCTaNYklCIEfSwBgfXIsMwFpyebyusdZHE=
 
-```
+```go
 package main
  
 import (

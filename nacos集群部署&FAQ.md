@@ -65,7 +65,7 @@ server.servlet.contextPath=/nacos
 
 将所有集群依次启动
 
-```
+```bash
 sh bin/startup.sh
 ```
 
@@ -81,7 +81,7 @@ go-nacos客户端访问服务端采用http连接
 
 当客户端配置仅一个节点时，如果访问失败，会重新访问，3次之后还是失败返回err
 
-```
+```go
 for i := 0; i < constant.REQUEST_DOMAIN_RETRY_TIME; i++ {
     ...
 }
@@ -92,7 +92,7 @@ REQUEST_DOMAIN_RETRY_TIME = 3
 
 当客户端配置多个节点时，会随机访问其中一个，如果访问失败，则会继续访问下一个，如果成功则返回，否则直至所有节点都访问完毕返回err
 
-```
+```go
 index := rand.Intn(len(srvs))
 for i := 1; i <= len(srvs); i++ {
     ...
@@ -111,7 +111,7 @@ for i := 1; i <= len(srvs); i++ {
 
 go-nacos注册服务实例代码
 
-```
+```go
 // 注册服务实例
 func (sc *NamingClient) RegisterInstance(param vo.RegisterInstanceParam) (bool, error) {
 	...
@@ -125,7 +125,7 @@ func (sc *NamingClient) RegisterInstance(param vo.RegisterInstanceParam) (bool, 
 
 nacos服务端接收心跳代码
 
-```
+```java
 @CanDistro
 @PutMapping("/beat")
 @Secured(parser = NamingResourceParser.class, action = ActionTypes.WRITE)
@@ -144,7 +144,7 @@ public ObjectNode beat(HttpServletRequest request) throws Exception {
 
 对所访问 nacos 节点对服务实例增删改后，该节点会重新把数据同步给其他节点
 
-```
+```java
 # com.alibaba.nacos.naming.consistency.ephemeral.distro.DistroConsistencyServiceImpl.java
 
 @Override
@@ -156,7 +156,7 @@ public void put(String key, Record value) throws NacosException {
 
 从线程池中随机取出一个线程并放入任务
 
-```
+```java
 # com.alibaba.nacos.naming.consistency.ephemeral.distro.TaskDispatcher.java
 public void addTask(String key) {
 	taskSchedulerList.get(UtilsAndCommons.shakeUp(key, cpuCoreCount)).addTask(key);
@@ -168,7 +168,7 @@ public void addTask(String key) {
 
 线程池中的线程执行任务如下
 
-```
+```java
 # com.alibaba.nacos.naming.consistency.ephemeral.distro.TaskDispatcher.java#TaskScheduler
 
 @Override
@@ -193,7 +193,7 @@ public void run() {
 
 执行同步任务
 
-```
+```java
 # com.alibaba.nacos.naming.consistency.ephemeral.distro.DataSyncer.java
 
 public void submit(SyncTask task, long delay) {
@@ -226,7 +226,7 @@ public void submit(SyncTask task, long delay) {
 
 同步数据，http请求
 
-```
+```java
 # com.alibaba.nacos.naming.misc.NamingProxy.java
 
 public static boolean syncData(byte[] data, String curServer) {
@@ -270,7 +270,7 @@ public static boolean syncData(byte[] data, String curServer) {
 
 内存配置位于启动脚本 startup.cmd / startup.sh
 
-```
+```bash
 ...
 if [[ "${MODE}" == "standalone" ]]; then
     JAVA_OPT="${JAVA_OPT} -Xms512m -Xmx512m -Xmn256m"   #这是单机模式配置
